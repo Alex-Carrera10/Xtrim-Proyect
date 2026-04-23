@@ -1,0 +1,21 @@
+<template>
+  <div class="layout-wrapper">
+    <TheNavbar />
+    <main>
+      <slot />
+    </main>
+    <TheFooter />
+  </div>
+</template>
+
+<style scoped>
+.layout-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+</style>
