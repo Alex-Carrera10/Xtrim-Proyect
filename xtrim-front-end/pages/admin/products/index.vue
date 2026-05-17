@@ -48,9 +48,67 @@
                 <label>Precio de Venta ($)</label>
                 <input v-model="formProduct.price" type="number" step="0.01" required placeholder="0.00">
               </div>
-              <div class="form-group">
-                <label>URL de Imagen</label>
-                <input v-model="formProduct.image" type="text" placeholder="/coffee-table.png o URL externa">
+              <div class="form-group full-width">
+                <label>Imagen del Mueble</label>
+                <div class="image-tabs">
+                  <button 
+                    type="button" 
+                    class="tab-btn" 
+                    :class="{ active: imageInputMethod === 'file' }"
+                    @click="imageInputMethod = 'file'"
+                  >
+                    <Upload :size="14" /> Subir desde mi Compu
+                  </button>
+                  <button 
+                    type="button" 
+                    class="tab-btn" 
+                    :class="{ active: imageInputMethod === 'url' }"
+                    @click="imageInputMethod = 'url'"
+                  >
+                    <Link :size="14" /> URL Externa
+                  </button>
+                </div>
+
+                <div v-if="imageInputMethod === 'file'" class="upload-container">
+                  <input 
+                    ref="fileInputRef" 
+                    type="file" 
+                    accept="image/*" 
+                    class="hidden-file-input"
+                    @change="handleFileChange" 
+                  />
+
+                  <div 
+                    v-if="!imagePreview" 
+                    class="upload-dropzone" 
+                    @click="triggerFileInput"
+                  >
+                    <Upload class="upload-icon" :size="24" />
+                    <span class="upload-text">Haz clic para buscar o arrastra una imagen aquí</span>
+                    <span class="upload-subtext">Formatos recomendados: PNG, JPG, WEBP</span>
+                  </div>
+
+                  <div v-else class="upload-preview-box">
+                    <img :src="imagePreview" alt="Previsualización" class="upload-preview-img" />
+                    <div class="preview-actions">
+                      <button type="button" class="action-btn delete-img-btn" @click="removeUploadedImage">
+                        Quitar Imagen
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-else class="url-input-container">
+                  <input 
+                    v-model="formProduct.image" 
+                    type="text" 
+                    placeholder="Ej: https://mis-imagenes.com/mesa.png o /coffee-table.png"
+                  />
+                  <div v-if="formProduct.image" class="url-preview-box mt-2">
+                    <span class="preview-title">Vista previa de la URL externa:</span>
+                    <img :src="formProduct.image" alt="URL Preview" class="upload-preview-img small" />
+                  </div>
+                </div>
               </div>
               <div class="form-group full-width">
                 <label>Características / Detalles (Una por línea)</label>
@@ -194,7 +252,9 @@ import {
   X, 
   LogOut, 
   LayoutDashboard,
-  ShoppingBag
+  ShoppingBag,
+  Upload,
+  Link
 } from 'lucide-vue-next'
 
 import { useProducts } from '@/composables/useProducts'
@@ -226,9 +286,47 @@ const formProduct = reactive({
 
 const featuresText = ref('')
 
+const imageInputMethod = ref('file')
+const imagePreview = ref('')
+const fileInputRef = ref(null)
+
+const triggerFileInput = () => {
+  fileInputRef.value?.click()
+}
+
+const handleFileChange = (event) => {
+  const file = event.target.files?.[0]
+  if (!file) return
+
+  if (!file.type.startsWith('image/')) {
+    alert('Por favor selecciona un archivo de imagen válido')
+    return
+  }
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const base64String = e.target?.result
+    if (typeof base64String === 'string') {
+      formProduct.image = base64String
+      imagePreview.value = base64String
+    }
+  }
+  reader.readAsDataURL(file)
+}
+
+const removeUploadedImage = () => {
+  formProduct.image = ''
+  imagePreview.value = ''
+  if (fileInputRef.value) {
+    fileInputRef.value.value = ''
+  }
+}
+
 const openCreateModal = () => {
   isEditMode.value = false
   featuresText.value = ''
+  imageInputMethod.value = 'file'
+  imagePreview.value = ''
   Object.assign(formProduct, {
     id: '',
     title: '',
@@ -243,6 +341,15 @@ const openCreateModal = () => {
 const openEditModal = (product) => {
   isEditMode.value = true
   featuresText.value = product.features.join('\n')
+  
+  if (product.image && product.image.startsWith('data:image/')) {
+    imageInputMethod.value = 'file'
+    imagePreview.value = product.image
+  } else {
+    imageInputMethod.value = product.image ? 'url' : 'file'
+    imagePreview.value = ''
+  }
+
   Object.assign(formProduct, {
     id: product.id,
     title: product.title,
@@ -729,4 +836,142 @@ onMounted(() => {
 }
 
 .mt-4 { margin-top: 2.5rem; }
+
+/* Pestañas de Imagen */
+.image-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  background: #0a0a0c;
+  padding: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid #222;
+  width: max-content;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: #1a1a1e;
+  color: #ff3e00;
+}
+
+/* Área de Carga */
+.hidden-file-input {
+  display: none;
+}
+
+.upload-dropzone {
+  border: 2px dashed #222;
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #0a0a0c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-dropzone:hover {
+  border-color: #ff3e00;
+  background: rgba(255, 62, 0, 0.02);
+}
+
+.upload-icon {
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+.upload-dropzone:hover .upload-icon {
+  color: #ff3e00;
+}
+
+.upload-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #bbb;
+  display: block;
+}
+
+.upload-subtext {
+  font-size: 0.7rem;
+  color: #555;
+  display: block;
+}
+
+/* Vista Previa de Imagen */
+.upload-preview-box {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: #0a0a0c;
+  border: 1px solid #222;
+  border-radius: 14px;
+  width: 100%;
+}
+
+.upload-preview-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #222;
+  background: #1e1e24;
+}
+
+.upload-preview-img.small {
+  width: 70px;
+  height: 70px;
+  margin-top: 0.5rem;
+}
+
+.preview-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.delete-img-btn {
+  background: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d;
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-img-btn:hover {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.preview-title {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+}
 </style>
