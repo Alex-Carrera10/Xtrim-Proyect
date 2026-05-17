@@ -19,6 +19,7 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs22.x",
     region: "us-east-1",
+    profile: "muebleria",
     httpApi: {
       cors: true,
     },
@@ -122,6 +123,61 @@ const serverlessConfiguration: AWS = {
           httpApi: {
             method: "PUT",
             path: "/leads/{id}",
+          },
+        },
+      ],
+    },
+    createProduct: {
+      handler: "src/infrastructure/handlers/product.createProduct",
+      events: [
+        {
+          httpApi: {
+            method: "POST",
+            path: "/products",
+          },
+        },
+      ],
+    },
+    getProducts: {
+      handler: "src/infrastructure/handlers/product.getProducts",
+      events: [
+        {
+          httpApi: {
+            method: "GET",
+            path: "/products",
+          },
+        },
+      ],
+    },
+    getProductById: {
+      handler: "src/infrastructure/handlers/product.getProductById",
+      events: [
+        {
+          httpApi: {
+            method: "GET",
+            path: "/products/{id}",
+          },
+        },
+      ],
+    },
+    updateProduct: {
+      handler: "src/infrastructure/handlers/product.updateProduct",
+      events: [
+        {
+          httpApi: {
+            method: "PUT",
+            path: "/products/{id}",
+          },
+        },
+      ],
+    },
+    deleteProduct: {
+      handler: "src/infrastructure/handlers/product.deleteProduct",
+      events: [
+        {
+          httpApi: {
+            method: "DELETE",
+            path: "/products/{id}",
           },
         },
       ],

@@ -1,12 +1,5 @@
 <script setup>
-if (process.client) {
-  window.addEventListener('keydown', (e) => {
-    // Atajo: Shift + A
-    if (e.shiftKey && e.key === 'A') {
-      navigateTo('/admin')
-    }
-  })
-}
+// Eliminado el atajo global de teclado Shift+A para evitar redirecciones al escribir nombres con A mayúscula.
 </script>
 
 <template>

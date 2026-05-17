@@ -173,6 +173,7 @@ definePageMeta({
 
 const route = useRoute()
 const leadId = route.params.id
+const config = useRuntimeConfig()
 
 const lead = ref(null)
 const activities = ref([])
@@ -196,8 +197,8 @@ const pipelineSteps = ['Nuevo', 'Contactado', 'En gestión', 'Ganado', 'Perdido'
 const fetchLeadData = async () => {
   try {
     const [leadData, historyData] = await Promise.all([
-      $fetch(`http://localhost:3000/leads/${leadId}`),
-      $fetch(`http://localhost:3000/leads/${leadId}/activities`)
+      $fetch(`${config.public.apiUrl}/leads/${leadId}`),
+      $fetch(`${config.public.apiUrl}/leads/${leadId}/activities`)
     ])
     lead.value = leadData
     activities.value = historyData
@@ -219,7 +220,7 @@ const fetchLeadData = async () => {
 const saveChanges = async () => {
   isSavingChanges.value = true
   try {
-    const updatedLead = await $fetch(`http://localhost:3000/leads/${leadId}`, {
+    const updatedLead = await $fetch(`${config.public.apiUrl}/leads/${leadId}`, {
       method: 'PUT',
       body: editForm
     })
@@ -238,7 +239,7 @@ const handleDelete = async () => {
   if (!confirm('¿Estás seguro de que quieres eliminar este lead de forma permanente? Esta acción no se puede deshacer.')) return
   
   try {
-    await $fetch(`http://localhost:3000/leads/${leadId}`, {
+    await $fetch(`${config.public.apiUrl}/leads/${leadId}`, {
       method: 'DELETE'
     })
     navigateTo('/admin')
@@ -252,7 +253,7 @@ const updateStatus = async (newStatus) => {
   if (lead.value.status === newStatus) return
   
   try {
-    await $fetch(`http://localhost:3000/leads/${leadId}/status`, {
+    await $fetch(`${config.public.apiUrl}/leads/${leadId}/status`, {
       method: 'PATCH',
       body: { status: newStatus }
     })
@@ -274,7 +275,7 @@ const saveActivity = async (contentInput = null, typeInput = null) => {
   
   isSaving.value = true
   try {
-    await $fetch(`http://localhost:3000/leads/${leadId}/activities`, {
+    await $fetch(`${config.public.apiUrl}/leads/${leadId}/activities`, {
       method: 'POST',
       body: { content, type }
     })

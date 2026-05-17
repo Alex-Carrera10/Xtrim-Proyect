@@ -1,5 +1,10 @@
 <script setup>
-const collections = [
+import { onMounted, computed } from 'vue'
+import { useProducts } from '@/composables/useProducts'
+
+const { products, loading, fetchProducts } = useProducts()
+
+const fallbackCollections = [
   {
     title: "Living Room Collection",
     price: "450.00",
@@ -37,6 +42,14 @@ const collections = [
     image: "/bed-frame.png"
   }
 ]
+
+const displayCollections = computed(() => {
+  return products.value.length > 0 ? products.value : fallbackCollections
+})
+
+onMounted(() => {
+  fetchProducts()
+})
 </script>
 
 <template>
@@ -51,7 +64,7 @@ const collections = [
         </div>
         
         <div class="grid">
-          <ProductCard v-for="(item, index) in collections" :key="index" v-bind="item" />
+          <ProductCard v-for="(item, index) in displayCollections" :key="index" v-bind="item" />
         </div>
       </div>
     </section>
@@ -100,7 +113,7 @@ const collections = [
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 3rem;
 }
 

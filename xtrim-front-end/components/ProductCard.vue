@@ -34,7 +34,7 @@ const handleAdd = () => {
       <div class="card-footer">
         <div class="price">
           <span class="currency">$</span>
-          <span class="amount">{{ price }}</span>
+          <span class="amount">{{ Number(price).toFixed(2) }}</span>
         </div>
         
         <button class="add-btn" @click="handleAdd" title="Añadir al Carrito">

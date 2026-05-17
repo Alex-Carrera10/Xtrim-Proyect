@@ -76,12 +76,16 @@
 
     <aside class="sidebar">
       <div class="logo">
-        <span class="xtrim">XTRIM</span><span class="crm">CRM</span>
+        <span class="xtrim">ARTISAN</span><span class="crm">CRM</span>
       </div>
       <nav class="main-nav">
         <NuxtLink to="/admin" class="nav-item active">
           <LayoutDashboard :size="18" />
-          Dashboard
+          Leads Dashboard
+        </NuxtLink>
+        <NuxtLink to="/admin/products" class="nav-item">
+          <ShoppingBag :size="18" />
+          Catalog Products
         </NuxtLink>
         <NuxtLink to="/" class="nav-item">
           <ExternalLink :size="18" />
@@ -202,13 +206,16 @@ import {
   Plus, 
   X, 
   LogOut, 
-  LayoutDashboard 
+  LayoutDashboard,
+  ShoppingBag
 } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'admin',
   middleware: 'auth'
 })
+
+const config = useRuntimeConfig();
 
 const leads = ref([]);
 const stats = reactive({
@@ -239,11 +246,11 @@ const conversionRate = computed(() => {
 
 const fetchLeads = async () => {
   try {
-    const response = await $fetch('http://localhost:3000/leads');
+    const response = await $fetch(`${config.public.apiUrl}/leads`);
     leads.value = response;
     
     // Fetch KPI
-    const kpiResponse = await $fetch('http://localhost:3000/leads/kpi');
+    const kpiResponse = await $fetch(`${config.public.apiUrl}/leads/kpi`);
     stats.revenue = kpiResponse.totalSales || 0;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -260,7 +267,7 @@ const confirmDelete = async () => {
   
   isDeleting.value = true
   try {
-    await $fetch(`http://localhost:3000/leads/${leadToDelete.value}`, {
+    await $fetch(`${config.public.apiUrl}/leads/${leadToDelete.value}`, {
       method: 'DELETE'
     })
     leads.value = leads.value.filter(l => l.id !== leadToDelete.value)
@@ -276,7 +283,7 @@ const confirmDelete = async () => {
 const handleCreateLead = async () => {
   isCreatingLead.value = true
   try {
-    const response = await $fetch('http://localhost:3000/leads', {
+    const response = await $fetch(`${config.public.apiUrl}/leads`, {
       method: 'POST',
       body: newLead
     })
