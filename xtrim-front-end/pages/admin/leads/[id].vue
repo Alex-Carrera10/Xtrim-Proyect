@@ -391,6 +391,49 @@ onMounted(() => {
   margin-bottom: 2rem;
 }
 
+.header-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.icon-btn {
+  background: #1a1a1e;
+  border: 1px solid #2d2d34;
+  color: #a0a0ab;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  border-color: #ff3e00;
+  box-shadow: 0 4px 15px rgba(255, 62, 0, 0.15);
+}
+
+.icon-btn.edit-btn:hover {
+  background: rgba(255, 62, 0, 0.1);
+  color: #ff3e00;
+  border-color: #ff3e00;
+}
+
+.icon-btn.delete-btn:hover {
+  background: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+  box-shadow: 0 4px 15px rgba(255, 77, 77, 0.15);
+}
+
+.icon-btn:focus {
+  outline: none;
+}
+
+
 .breadcrumb {
   display: flex;
   align-items: center;
