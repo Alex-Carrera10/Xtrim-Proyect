@@ -2,7 +2,7 @@
   <div class="lead-management-page">
     <aside class="sidebar">
       <div class="logo">
-        <span class="xtrim">XTRIM</span><span class="crm">CRM</span>
+        <span class="xtrim">DORADO</span><span class="crm">CRM</span>
       </div>
       <nav>
         <NuxtLink to="/admin" class="nav-item">

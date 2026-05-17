@@ -7,8 +7,8 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-vue-next'
     <div class="container">
       <div class="grid">
         <div class="brand">
-          <h3>XTRIM</h3>
-          <p>Conectando tus sueños con la mejor tecnología.</p>
+          <h3>Mueblería El Dorado</h3>
+          <p>Muebles de madera fina y acabados artesanales para toda la vida.</p>
           <div class="social">
             <Facebook :size="20" />
             <Twitter :size="20" />
@@ -20,28 +20,28 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-vue-next'
         <div class="links">
           <h4>Empresa</h4>
           <NuxtLink to="#">Sobre Nosotros</NuxtLink>
-          <NuxtLink to="#">Carreras</NuxtLink>
-          <NuxtLink to="#">Prensa</NuxtLink>
+          <NuxtLink to="#">Artesanos</NuxtLink>
+          <NuxtLink to="#">Materiales</NuxtLink>
         </div>
 
         <div class="links">
-          <h4>Servicios</h4>
-          <NuxtLink to="#">Internet Fibra</NuxtLink>
-          <NuxtLink to="#">TV Digital</NuxtLink>
-          <NuxtLink to="#">Smart Home</NuxtLink>
+          <h4>Colecciones</h4>
+          <NuxtLink to="#">Dormitorio</NuxtLink>
+          <NuxtLink to="#">Sala de Estar</NuxtLink>
+          <NuxtLink to="#">Comedor y Oficina</NuxtLink>
         </div>
 
         <div class="links">
           <h4>Soporte</h4>
-          <NuxtLink to="#">Centro de Ayuda</NuxtLink>
+          <NuxtLink to="#">Cuidado de la Madera</NuxtLink>
           <NuxtLink to="#">Contacto</NuxtLink>
-          <NuxtLink to="#">Estado de Red</NuxtLink>
+          <NuxtLink to="#">Preguntas Frecuentes</NuxtLink>
         </div>
       </div>
       
       <div class="bottom">
         <p>
-          &copy; {{ new Date().getFullYear() }} Xtrim. Todos los derechos reservados.
+          &copy; {{ new Date().getFullYear() }} Mueblería El Dorado. Todos los derechos reservados.
           <NuxtLink to="/admin" class="secret-link">.</NuxtLink>
         </p>
         <div class="legal">

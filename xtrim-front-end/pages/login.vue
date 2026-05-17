@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="login-container glass">
       <div class="login-header">
-        <div class="logo">XTRIM<span class="crm">CRM</span></div>
+        <div class="logo">El Dorado<span class="crm">CRM</span></div>
         <h1>Acceso Administrativo</h1>
         <p>Ingresa tus credenciales para gestionar leads.</p>
       </div>

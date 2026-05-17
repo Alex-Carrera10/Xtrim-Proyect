@@ -76,7 +76,7 @@
 
     <aside class="sidebar">
       <div class="logo">
-        <span class="xtrim">ARTISAN</span><span class="crm">CRM</span>
+        <span class="xtrim">DORADO</span><span class="crm">CRM</span>
       </div>
       <nav class="main-nav">
         <NuxtLink to="/admin" class="nav-item active">
