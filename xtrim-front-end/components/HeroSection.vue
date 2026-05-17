@@ -1,5 +1,5 @@
 <script setup>
-// No extra logic needed for the hero section yet
+// No extra logic needed for the hero section
 </script>
 
 <template>
@@ -7,23 +7,25 @@
     <div class="background-glow"></div>
     <div class="container hero-container">
       <div class="content">
-        <span class="badge">Nueva Generación Fiber</span>
+        <span class="badge">The Artisan's Atelier</span>
         <h1 class="title">
-          Experimenta la <span class="gradient-text">Velocidad</span> Real
+          Heirloom Quality,<br />
+          <span class="serif-bold">Handcrafted for Life.</span>
         </h1>
         <p class="description">
-          Conéctate al futuro con la red de fibra óptica más estable del país. 
-          Smart living, sin interrupciones.
+          Bespoke furniture that honors the natural narrative of the wood. 
+          Every joint, every grain, and every finish is executed with master precision.
         </p>
         <div class="cta">
-          <button class="button-premium">Contratar Ahora</button>
-          <button class="secondary-btn">Ver Planes</button>
+          <button class="button-premium">View Collections</button>
+          <button class="secondary-btn">Commission a Piece</button>
         </div>
       </div>
       
       <div class="visual">
-        <div class="image-placeholder">
-          <div class="inner-glow"></div>
+        <div class="image-container">
+          <img src="/hero-woodworking.png" alt="Wood planing manual craftmanship" class="hero-image" />
+          <div class="image-shadow"></div>
         </div>
       </div>
     </div>
@@ -33,58 +35,69 @@
 <style scoped>
 .hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 120px 0 60px;
+  padding: 140px 0 80px;
+  background: var(--background);
 }
 
 .background-glow {
   position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 60%;
-  height: 80%;
-  background: radial-gradient(circle, var(--secondary), transparent 70%);
-  opacity: 0.15;
-  filter: blur(100px);
+  top: -10%;
+  right: -5%;
+  width: 50%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(194, 153, 107, 0.12), transparent 70%);
+  opacity: 0.8;
+  filter: blur(80px);
   z-index: -1;
 }
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
 }
 
 .badge {
   display: inline-block;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 1.2rem;
   border-radius: 50px;
-  background: rgba(0, 242, 255, 0.1);
-  border: 1px solid rgba(0, 242, 255, 0.2);
+  background: rgba(77, 59, 46, 0.05);
+  border: 1px solid rgba(77, 59, 46, 0.1);
   color: var(--primary);
-  font-size: 0.8rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.75rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
 .title {
-  font-size: 4rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
+  font-family: 'Noto Serif', serif;
+  font-size: 3.6rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1.8rem;
+  color: var(--primary);
+}
+
+.serif-bold {
+  font-weight: 700;
 }
 
 .description {
-  font-size: 1.15rem;
-  opacity: 0.7;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.05rem;
+  color: var(--foreground);
+  opacity: 0.8;
   max-width: 500px;
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: 2.5rem;
 }
 
@@ -95,47 +108,67 @@
 
 .secondary-btn {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.8rem 1.8rem;
+  border-radius: 4px;
+  font-family: 'Work Sans', sans-serif;
   font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(77, 59, 46, 0.04);
+  border-color: #3C2E24;
 }
 
-.image-placeholder {
+.image-container {
   width: 100%;
-  aspect-ratio: 1;
-  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
 }
 
-.inner-glow {
+.hero-image {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 20px 40px rgba(77, 59, 46, 0.08);
+  border: 1px solid rgba(77, 59, 46, 0.1);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+
+.hero-image:hover {
+  transform: scale(1.02);
+}
+
+.image-shadow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
-  background: radial-gradient(circle, var(--primary), transparent 60%);
-  opacity: 0.1;
-  filter: blur(50px);
+  bottom: -15px;
+  right: -15px;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+  background: var(--secondary);
+  opacity: 0.15;
+  border-radius: 4px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 @media (max-width: 968px) {
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 3rem;
   }
   
   .description {
@@ -147,7 +180,17 @@
   }
   
   .title {
-    font-size: 3rem;
+    font-size: 2.8rem;
+  }
+  
+  .hero-image {
+    max-width: 400px;
+  }
+  
+  .image-shadow {
+    max-width: 400px;
+    bottom: -10px;
+    right: -10px;
   }
 }
 </style>

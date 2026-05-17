@@ -1,14 +1,14 @@
 :root {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --primary: #00f2ff;
-  --primary-glow: rgba(0, 242, 255, 0.3);
-  --secondary: #7000ff;
-  --accent: #ff00c8;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(10, 10, 10, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --background: #F9F6F0; /* Crema / Hueso suave de fondo */
+  --foreground: #262626; /* Carbón oscuro para el texto */
+  --primary: #4D3B2E;    /* Marrón chocolate profundo para madera noble */
+  --primary-glow: rgba(77, 59, 46, 0.15);
+  --secondary: #C2996B;  /* Arena cálido para acentos */
+  --accent: #A37E58;     /* Madera intermedia */
+  --card-bg: #FFFFFF;    /* Tarjetas color blanco puro para contraste */
+  --border: rgba(77, 59, 46, 0.12); /* Bordes sutiles café claro */
+  --glass-bg: rgba(249, 246, 240, 0.85);
+  --glass-border: rgba(77, 59, 46, 0.15);
 }
 
 * {
@@ -23,7 +23,7 @@ body {
   overflow-x: hidden;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -43,7 +43,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #C2996B;
   border-radius: 10px;
 }
 
@@ -66,25 +66,30 @@ a {
 }
 
 .button-premium {
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.8rem 1.8rem;
+  border-radius: 4px; /* Estética minimalista más rectangular de mueblería de diseño */
   background: var(--primary);
-  color: #000;
+  color: #F9F6F0; /* Letras color crema */
+  font-family: 'Work Sans', sans-serif;
   font-weight: 600;
-  border: none;
+  border: 1px solid var(--primary);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: 0 4px 10px var(--primary-glow);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
 }
 
 .button-premium:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--primary-glow);
-  filter: brightness(1.1);
+  box-shadow: 0 6px 15px var(--primary-glow);
+  background: #3C2E24; /* Café chocolate aún más oscuro al hacer hover */
+  border-color: #3C2E24;
 }
 
 .container {

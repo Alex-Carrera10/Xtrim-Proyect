@@ -206,6 +206,7 @@ import {
 } from 'lucide-vue-next'
 
 definePageMeta({
+  layout: 'admin',
   middleware: 'auth'
 })
 

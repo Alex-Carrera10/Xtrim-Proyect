@@ -191,7 +191,7 @@ const handleCheckout = async () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(77, 59, 46, 0.4); /* Overlay con tono café */
   backdrop-filter: blur(4px);
   z-index: 1500;
   opacity: 0;
@@ -211,13 +211,14 @@ const handleCheckout = async () => {
   width: 400px;
   height: 100vh;
   z-index: 1501;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.8);
-  background: #0f0f12; /* Fondo sólido y profundo */
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -10px 0 40px rgba(77, 59, 46, 0.08);
+  background: #F9F6F0; /* Fondo crema orgánico */
+  border-left: 1px solid rgba(77, 59, 46, 0.15);
+  color: var(--foreground);
 }
 
 .drawer.active {
@@ -231,12 +232,19 @@ const handleCheckout = async () => {
   margin-bottom: 2rem;
 }
 
+.drawer-header h3 {
+  font-family: 'Noto Serif', serif;
+  color: var(--primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
 .close-btn {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--primary);
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: 0.3s;
 }
 
@@ -253,28 +261,41 @@ const handleCheckout = async () => {
 .empty-state {
   text-align: center;
   margin-top: 4rem;
-  opacity: 0.5;
+  opacity: 0.6;
+  font-family: 'Work Sans', sans-serif;
+  color: var(--primary);
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .cart-item {
   padding: 1.2rem;
-  border-radius: 12px;
+  border-radius: 4px; /* Más anguloso minimalista */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  background: #1a1a1f; /* Fondo sólido para los items */
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #FFFFFF; /* Blanco puro para contraste */
+  border: 1px solid rgba(77, 59, 46, 0.1);
+  box-shadow: 0 2px 8px rgba(77, 59, 46, 0.03);
 }
 
 .item-info h4 {
-  font-size: 1rem;
+  font-family: 'Noto Serif', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
   margin-bottom: 0.3rem;
 }
 
 .item-price {
-  color: var(--primary);
+  color: var(--accent);
+  font-family: 'Work Sans', sans-serif;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .remove-btn {
@@ -282,8 +303,9 @@ const handleCheckout = async () => {
   border: none;
   color: #ff4d4d;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: 0.3s;
+  padding: 0.2rem;
 }
 
 .remove-btn:hover {
@@ -293,15 +315,17 @@ const handleCheckout = async () => {
 
 .drawer-footer {
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(77, 59, 46, 0.15);
 }
 
 .total-row {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.15rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  color: var(--primary);
 }
 
 .total-amount {
@@ -322,26 +346,42 @@ const handleCheckout = async () => {
 
 /* Form Styles */
 .checkout-form {
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 .back-btn {
   background: none;
   border: none;
-  color: #888;
+  color: var(--secondary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 1.5rem;
   padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: 0.2s;
 }
 
-.back-btn:hover { color: #fff; }
+.back-btn:hover { color: var(--primary); }
 
-.checkout-form h3 { margin-bottom: 0.5rem; }
-.subtitle { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+.checkout-form h3 { 
+  font-family: 'Noto Serif', serif; 
+  color: var(--primary); 
+  font-size: 1.3rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.subtitle { 
+  color: #666; 
+  font-family: 'Work Sans', sans-serif; 
+  font-size: 0.85rem; 
+  margin-bottom: 2rem; 
+}
 
 .input-group {
   margin-bottom: 1.5rem;
@@ -351,32 +391,37 @@ const handleCheckout = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.8rem;
-  color: #aaa;
-  margin-bottom: 0.5rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
 }
 
 .input-group input, .input-group select {
   width: 100%;
-  background: #08080a; /* Más oscuro que el fondo para contraste */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid rgba(77, 59, 46, 0.25);
+  border-radius: 4px; /* Anguloso sutil */
   padding: 0.9rem;
-  color: #fff;
-  font-family: inherit;
-  transition: 0.3s;
+  color: var(--foreground);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s;
 }
 
 .input-group input:focus, .input-group select:focus {
   border-color: var(--primary);
   outline: none;
-  background: #000;
-  box-shadow: 0 0 15px rgba(0, 112, 243, 0.1);
+  background: #FFFFFF;
+  box-shadow: 0 0 8px rgba(77, 59, 46, 0.1);
 }
 
 .input-group select option {
-  background: #111;
-  color: #fff;
+  background: #F9F6F0;
+  color: var(--foreground);
 }
 
 .fade-in {
@@ -391,13 +436,24 @@ const handleCheckout = async () => {
 .msg {
   margin-top: 1rem;
   padding: 0.8rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 4px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.85rem;
   text-align: center;
+  font-weight: 600;
 }
 
-.success { background: rgba(0, 255, 0, 0.1); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.2); }
-.error { background: rgba(255, 0, 0, 0.1); color: #ff0000; border: 1px solid rgba(255, 0, 0, 0.2); }
+.success { 
+  background: rgba(194, 153, 107, 0.15); 
+  color: var(--primary); 
+  border: 1px solid var(--secondary); 
+}
+
+.error { 
+  background: rgba(255, 0, 0, 0.05); 
+  color: #d32f2f; 
+  border: 1px solid rgba(255, 0, 0, 0.15); 
+}
 
 @media (max-width: 480px) {
   .drawer {

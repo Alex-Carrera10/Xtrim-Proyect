@@ -5,14 +5,14 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   app: {
     head: {
-      title: 'Xtrim eCommerce | Smart Connectivity',
+      title: 'Artisan Woodworks | Heirloom Quality, Handcrafted for Life',
       meta: [
-        { name: 'description', content: 'La mejor tecnología en conectividad y smart home.' }
+        { name: 'description', content: 'Bespoke furniture that honors the natural narrative of the wood. Heirloom quality, handcrafted for life.' }
       ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap' }
       ]
     }
   }
