@@ -1,11 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { PrismaLeadRepository } from "../persistence/PrismaLeadRepository";
-import { UpdateLeadStatusUseCase } from "@application/use-cases/UpdateLeadStatusUseCase";
-import { AddLeadActivityUseCase } from "@application/use-cases/AddLeadActivityUseCase";
-import { GetLeadHistoryUseCase } from "@application/use-cases/GetLeadHistoryUseCase";
-import { GetLeadByIdUseCase } from "@application/use-cases/GetLeadByIdUseCase";
-import { DeleteLeadUseCase } from "@application/use-cases/DeleteLeadUseCase";
-import { UpdateLeadUseCase } from "@application/use-cases/UpdateLeadUseCase";
+import {
+  UpdateLeadStatusUseCase,
+  AddLeadActivityUseCase,
+  GetLeadHistoryUseCase,
+  GetLeadByIdUseCase,
+  DeleteLeadUseCase,
+  UpdateLeadUseCase
+} from "@application/use-cases/lead";
 
 // Setup
 const repo = new PrismaLeadRepository();

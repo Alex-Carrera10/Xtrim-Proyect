@@ -1,5 +1,5 @@
-import { LeadRepository } from "../../domain/repositories/LeadRepository";
-import { LeadStatus } from "../../domain/entities/Lead";
+import { LeadRepository } from "@domain/repositories/LeadRepository";
+import { LeadStatus } from "@domain/entities/Lead";
 
 export class UpdateLeadStatusUseCase {
   constructor(private leadRepository: LeadRepository) {}

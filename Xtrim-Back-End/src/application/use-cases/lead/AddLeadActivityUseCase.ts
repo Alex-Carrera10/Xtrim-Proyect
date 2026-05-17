@@ -1,5 +1,5 @@
-import { LeadRepository } from "../../domain/repositories/LeadRepository";
-import { Activity, ActivityType } from "../../domain/entities/Activity";
+import { LeadRepository } from "@domain/repositories/LeadRepository";
+import { Activity, ActivityType } from "@domain/entities/Activity";
 
 export class AddLeadActivityUseCase {
   constructor(private leadRepository: LeadRepository) {}

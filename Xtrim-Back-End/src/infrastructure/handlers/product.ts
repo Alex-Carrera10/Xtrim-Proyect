@@ -1,10 +1,12 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { PrismaProductRepository } from "../persistence/PrismaProductRepository";
-import { CreateProductUseCase } from "@application/use-cases/CreateProductUseCase";
-import { GetProductsUseCase } from "@application/use-cases/GetProductsUseCase";
-import { GetProductByIdUseCase } from "@application/use-cases/GetProductByIdUseCase";
-import { UpdateProductUseCase } from "@application/use-cases/UpdateProductUseCase";
-import { DeleteProductUseCase } from "@application/use-cases/DeleteProductUseCase";
+import {
+  CreateProductUseCase,
+  GetProductsUseCase,
+  GetProductByIdUseCase,
+  UpdateProductUseCase,
+  DeleteProductUseCase
+} from "@application/use-cases/product";
 
 // Setup
 const repo = new PrismaProductRepository();

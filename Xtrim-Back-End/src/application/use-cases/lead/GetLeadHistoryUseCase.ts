@@ -1,4 +1,4 @@
-import { LeadRepository } from "../../domain/repositories/LeadRepository";
+import { LeadRepository } from "@domain/repositories/LeadRepository";
 
 export class GetLeadHistoryUseCase {
   constructor(private leadRepository: LeadRepository) {}
