@@ -24,7 +24,7 @@ const navLinks = [
   <nav :class="['nav', { 'scrolled': isScrolled }, 'glass']">
     <div class="container nav-container">
       <NuxtLink href="/" class="logo">
-        ARTISAN <span class="light-text">WOODWORKS</span>
+        MUEBLERÍA <span class="light-text">EL DORADO</span>
       </NuxtLink>
 
       <div :class="['links', { 'active': isMenuOpen }]">

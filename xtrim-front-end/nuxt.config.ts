@@ -10,9 +10,9 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'Artisan Woodworks | Heirloom Quality, Handcrafted for Life',
+      title: 'Mueblería El Dorado | Muebles de Madera Fina Artesanales',
       meta: [
-        { name: 'description', content: 'Bespoke furniture that honors the natural narrative of the wood. Heirloom quality, handcrafted for life.' }
+        { name: 'description', content: 'Mueblería El Dorado. Muebles artesanales de madera fina y acabados de lujo para toda la vida.' }
       ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
