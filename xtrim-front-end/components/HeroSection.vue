@@ -106,6 +106,21 @@
   gap: 1.5rem;
 }
 
+.button-premium {
+  background: #f3ece2;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  box-shadow: 0 4px 10px rgba(77, 59, 46, 0.08);
+}
+
+.button-premium:hover {
+  background: var(--primary);
+  color: #f3ece2;
+  border-color: var(--primary);
+  box-shadow: 0 6px 15px rgba(77, 59, 46, 0.15);
+}
+
+
 .secondary-btn {
   background: none;
   border: 1px solid var(--primary);

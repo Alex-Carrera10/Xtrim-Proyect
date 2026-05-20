@@ -154,6 +154,11 @@
       <div class="nav-spacer"></div>
 
       <div class="sidebar-footer">
+        <button @click="isDark = !isDark" class="nav-item theme-toggle-btn" type="button" :title="isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+          <Sun v-if="isDark" :size="18" />
+          <Moon v-else :size="18" />
+          {{ isDark ? 'Modo Claro' : 'Modo Oscuro' }}
+        </button>
         <button @click="handleLogout" class="nav-item logout-btn">
           <LogOut :size="18" />
           Cerrar Sesión
@@ -244,6 +249,7 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
 import { 
   Edit2, 
   Trash2, 
@@ -254,7 +260,9 @@ import {
   LayoutDashboard,
   ShoppingBag,
   Upload,
-  Link
+  Link,
+  Sun,
+  Moon
 } from 'lucide-vue-next'
 
 import { useProducts } from '@/composables/useProducts'
@@ -263,6 +271,8 @@ definePageMeta({
   layout: 'admin',
   middleware: 'auth'
 })
+
+const isDark = inject('isDark')
 
 const { products, loading, fetchProducts, createProduct, updateProduct, deleteProduct } = useProducts()
 
@@ -430,16 +440,17 @@ onMounted(() => {
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
-  background: #0a0a0c;
-  color: #fff;
+  background: var(--crm-bg);
+  color: var(--crm-text);
   font-family: 'Inter', sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 /* Sidebar */
 .sidebar {
   width: 260px;
-  background: #111114;
-  border-right: 1px solid #222;
+  background: var(--crm-sidebar-bg);
+  border-right: 1px solid var(--crm-border);
   padding: 2rem 1.2rem;
   display: flex;
   flex-direction: column;
@@ -447,6 +458,7 @@ onMounted(() => {
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background 0.5s ease, border-color 0.5s ease;
 }
 
 .logo {
@@ -457,7 +469,7 @@ onMounted(() => {
   padding-left: 0.8rem;
 }
 
-.xtrim { color: #fff; }
+.xtrim { color: var(--crm-text); transition: color 0.5s ease; }
 .crm { color: #ff3e00; }
 
 .main-nav {
@@ -471,10 +483,10 @@ onMounted(() => {
   align-items: center;
   gap: 0.8rem;
   padding: 0.8rem 1rem;
-  color: #888;
+  color: var(--crm-text-muted);
   text-decoration: none;
   border-radius: 12px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   border: none;
   background: transparent;
   width: 100%;
@@ -484,12 +496,12 @@ onMounted(() => {
 }
 
 .nav-item:hover {
-  background: #1a1a1e;
-  color: #fff;
+  background: var(--crm-nav-hover);
+  color: var(--crm-text);
 }
 
 .nav-item.active {
-  background: #ff3e0020;
+  background: var(--crm-nav-active-bg);
   color: #ff3e00;
   font-weight: 600;
 }
@@ -500,7 +512,11 @@ onMounted(() => {
 
 .sidebar-footer {
   padding-top: 1.5rem;
-  border-top: 1px solid #222;
+  border-top: 1px solid var(--crm-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.5s ease;
 }
 
 .logout-btn {
@@ -534,10 +550,12 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #1a1a1e;
+  background: var(--crm-nav-hover);
+  color: var(--crm-text);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 .status-dot {
@@ -550,10 +568,11 @@ onMounted(() => {
 
 /* Products Table */
 .leads-section {
-  background: #111114;
+  background: var(--crm-panel-bg);
   border-radius: 20px;
-  border: 1px solid #222;
+  border: 1px solid var(--crm-border);
   padding: 2rem;
+  transition: all 0.5s ease;
 }
 
 .section-header {
@@ -596,20 +615,21 @@ onMounted(() => {
 .leads-table th {
   text-align: left;
   padding: 1rem;
-  color: #555;
+  color: var(--crm-table-header);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--crm-border);
+  transition: all 0.5s ease;
 }
 
 .lead-row {
-  border-bottom: 1px solid #1a1a1e;
-  transition: background 0.2s;
+  border-bottom: 1px solid var(--crm-table-row-border);
+  transition: background 0.3s, border-color 0.5s ease;
 }
 
 .lead-row:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--crm-nav-hover);
 }
 
 .leads-table td {
@@ -621,8 +641,9 @@ onMounted(() => {
   height: 60px;
   border-radius: 8px;
   overflow: hidden;
-  background: #1e1e24;
-  border: 1px solid #222;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-border);
+  transition: all 0.5s ease;
 }
 
 .product-thumb {
@@ -634,7 +655,8 @@ onMounted(() => {
 .lead-name {
   display: block;
   font-weight: 600;
-  color: #fff;
+  color: var(--crm-text);
+  transition: color 0.5s ease;
 }
 
 .category-badge {
@@ -642,14 +664,16 @@ onMounted(() => {
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #222;
+  background: var(--crm-nav-hover);
+  border: 1px solid var(--crm-border);
   color: #ff3e00;
+  transition: all 0.5s ease;
 }
 
 .price-value {
   font-weight: 700;
-  color: #fff;
+  color: var(--crm-text);
+  transition: color 0.5s ease;
 }
 
 .features-list {
@@ -657,7 +681,8 @@ onMounted(() => {
   padding: 0;
   margin: 0;
   font-size: 0.8rem;
-  color: #888;
+  color: var(--crm-text-muted);
+  transition: color 0.5s ease;
 }
 
 .features-list li {
@@ -671,12 +696,12 @@ onMounted(() => {
 
 .action-btn {
   background: transparent;
-  border: 1px solid #333;
-  color: #888;
+  border: 1px solid var(--crm-border);
+  color: var(--crm-text-muted);
   padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .table-actions {
@@ -685,8 +710,8 @@ onMounted(() => {
 }
 
 .action-btn.edit:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--crm-border);
+  color: var(--crm-text);
 }
 
 .action-btn.delete:hover {
@@ -698,8 +723,9 @@ onMounted(() => {
 .loading-state, .empty-state {
   padding: 4rem;
   text-align: center;
-  color: #666;
+  color: var(--crm-text-muted);
   font-size: 0.95rem;
+  transition: color 0.5s ease;
 }
 
 /* Modal Styles */
@@ -718,14 +744,16 @@ onMounted(() => {
 }
 
 .modal-content {
-  background: #111114;
-  border: 1px solid #222;
+  background: var(--crm-modal-bg);
+  border: 1px solid var(--crm-modal-border);
   border-radius: 28px;
   padding: 3rem;
   max-width: 420px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  color: var(--crm-text);
+  transition: all 0.5s ease;
 }
 
 .modal-icon {
@@ -756,8 +784,9 @@ onMounted(() => {
 }
 
 .modal-btn.cancel {
-  background: #1a1a1e;
-  color: #888;
+  background: var(--crm-nav-hover);
+  color: var(--crm-text-muted);
+  transition: all 0.3s;
 }
 
 .modal-btn.confirm {
@@ -772,7 +801,7 @@ onMounted(() => {
 .close-btn {
   background: none;
   border: none;
-  color: #555;
+  color: var(--crm-text-muted);
   cursor: pointer;
 }
 
@@ -799,22 +828,23 @@ onMounted(() => {
 .form-group label {
   display: block;
   font-size: 0.7rem;
-  color: #555;
+  color: var(--crm-text-muted);
   text-transform: uppercase;
   font-weight: 800;
   margin-bottom: 0.6rem;
+  transition: color 0.5s ease;
 }
 
 .form-group input, 
 .form-group select, 
 .form-group textarea {
   width: 100%;
-  background: #0a0a0c;
-  border: 1px solid #222;
-  color: #fff;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-input-border);
+  color: var(--crm-input-text);
   padding: 1rem;
   border-radius: 12px;
-  transition: 0.3s;
+  transition: background 0.5s ease, border-color 0.3s, color 0.5s ease;
 }
 
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -842,11 +872,12 @@ onMounted(() => {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
-  background: #0a0a0c;
+  background: var(--crm-input-bg);
   padding: 0.25rem;
   border-radius: 8px;
-  border: 1px solid #222;
+  border: 1px solid var(--crm-input-border);
   width: max-content;
+  transition: all 0.5s ease;
 }
 
 .tab-btn {
@@ -855,7 +886,7 @@ onMounted(() => {
   gap: 0.4rem;
   background: transparent;
   border: none;
-  color: #666;
+  color: var(--crm-text-muted);
   padding: 0.4rem 1rem;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -865,11 +896,11 @@ onMounted(() => {
 }
 
 .tab-btn:hover {
-  color: #fff;
+  color: var(--crm-text);
 }
 
 .tab-btn.active {
-  background: #1a1a1e;
+  background: var(--crm-border);
   color: #ff3e00;
 }
 
@@ -879,13 +910,13 @@ onMounted(() => {
 }
 
 .upload-dropzone {
-  border: 2px dashed #222;
+  border: 2px dashed var(--crm-border);
   border-radius: 14px;
   padding: 2rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: #0a0a0c;
+  background: var(--crm-input-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -898,7 +929,7 @@ onMounted(() => {
 }
 
 .upload-icon {
-  color: #444;
+  color: var(--crm-text-muted);
   transition: color 0.3s ease;
 }
 
@@ -909,14 +940,16 @@ onMounted(() => {
 .upload-text {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #bbb;
+  color: var(--crm-text);
   display: block;
+  transition: color 0.5s ease;
 }
 
 .upload-subtext {
   font-size: 0.7rem;
-  color: #555;
+  color: var(--crm-text-muted);
   display: block;
+  transition: color 0.5s ease;
 }
 
 /* Vista Previa de Imagen */
@@ -925,10 +958,11 @@ onMounted(() => {
   align-items: center;
   gap: 1.5rem;
   padding: 1rem;
-  background: #0a0a0c;
-  border: 1px solid #222;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-border);
   border-radius: 14px;
   width: 100%;
+  transition: all 0.5s ease;
 }
 
 .upload-preview-img {
@@ -936,8 +970,9 @@ onMounted(() => {
   height: 90px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid #222;
-  background: #1e1e24;
+  border: 1px solid var(--crm-border);
+  background: var(--crm-input-bg);
+  transition: all 0.5s ease;
 }
 
 .upload-preview-img.small {
@@ -972,6 +1007,7 @@ onMounted(() => {
 .preview-title {
   display: block;
   font-size: 0.75rem;
-  color: #666;
+  color: var(--crm-text-muted);
+  transition: color 0.5s ease;
 }
 </style>

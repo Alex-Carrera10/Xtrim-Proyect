@@ -12,6 +12,11 @@
           <Globe :size="18" /> Ver Sitio
         </NuxtLink>
         <div class="nav-divider"></div>
+        <button @click="isDark = !isDark" class="nav-item theme-toggle-btn" type="button" :title="isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+          <Sun v-if="isDark" :size="18" />
+          <Moon v-else :size="18" />
+          {{ isDark ? 'Modo Claro' : 'Modo Oscuro' }}
+        </button>
         <button @click="handleLogout" class="nav-item logout-btn">
           <LogOut :size="18" /> Cerrar Sesión
         </button>
@@ -161,15 +166,19 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
 import { 
   LayoutDashboard, Globe, LogOut, ChevronRight, MessageCircle, 
-  Phone, MessageSquare, Calendar, PhoneCall, Mail, User, Edit2, Trash2, X
+  Phone, MessageSquare, Calendar, PhoneCall, Mail, User, Edit2, Trash2, X,
+  Sun, Moon
 } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'admin',
   middleware: 'auth'
 })
+
+const isDark = inject('isDark')
 
 const route = useRoute()
 const leadId = route.params.id
@@ -332,19 +341,21 @@ onMounted(() => {
 .lead-management-page {
   display: flex;
   min-height: 100vh;
-  background: #0a0a0c;
-  color: #fff;
+  background: var(--crm-bg);
+  color: var(--crm-text);
   font-family: 'Inter', sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 /* Sidebar Re-styling */
 .sidebar {
   width: 260px;
-  background: #111114;
-  border-right: 1px solid #222;
+  background: var(--crm-sidebar-bg);
+  border-right: 1px solid var(--crm-border);
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
+  transition: background 0.5s ease, border-color 0.5s ease;
 }
 
 .logo {
@@ -353,7 +364,7 @@ onMounted(() => {
   margin-bottom: 3rem;
 }
 
-.xtrim { color: #fff; }
+.xtrim { color: var(--crm-text); transition: color 0.5s ease; }
 .crm { color: #ff3e00; }
 
 .nav-item {
@@ -361,18 +372,18 @@ onMounted(() => {
   align-items: center;
   gap: 0.8rem;
   padding: 0.8rem 1rem;
-  color: #888;
+  color: var(--crm-text-muted);
   text-decoration: none;
   border-radius: 8px;
   margin-bottom: 0.5rem;
-  transition: 0.2s;
+  transition: all 0.3s ease;
   background: transparent;
   border: none;
   width: 100%;
   cursor: pointer;
 }
 
-.nav-item:hover { background: #1a1a1e; color: #fff; }
+.nav-item:hover { background: var(--crm-nav-hover); color: var(--crm-text); }
 .nav-divider { flex-grow: 1; }
 .logout-btn { color: #ff4d4d; }
 .logout-btn:hover { background: rgba(255, 0, 0, 0.1); color: #ff4d4d; }
@@ -397,9 +408,9 @@ onMounted(() => {
 }
 
 .icon-btn {
-  background: #1a1a1e;
-  border: 1px solid #2d2d34;
-  color: #a0a0ab;
+  background: var(--crm-nav-hover);
+  border: 1px solid var(--crm-border);
+  color: var(--crm-text-muted);
   padding: 0.8rem;
   border-radius: 12px;
   cursor: pointer;
@@ -411,7 +422,7 @@ onMounted(() => {
 
 .icon-btn:hover {
   transform: translateY(-2px);
-  color: #fff;
+  color: var(--crm-text);
   border-color: #ff3e00;
   box-shadow: 0 4px 15px rgba(255, 62, 0, 0.15);
 }
@@ -433,18 +444,16 @@ onMounted(() => {
   outline: none;
 }
 
-
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #555;
+  color: var(--crm-text-muted);
   font-size: 0.9rem;
 }
 
-.breadcrumb a { color: #888; text-decoration: none; }
-.breadcrumb span { color: #fff; font-weight: 600; }
-
+.breadcrumb a { color: var(--crm-text-muted); text-decoration: none; }
+.breadcrumb span { color: var(--crm-text); font-weight: 600; }
 
 /* Management Grid */
 .management-grid {
@@ -455,11 +464,12 @@ onMounted(() => {
 
 /* Profile Card */
 .profile-card {
-  background: #111114;
+  background: var(--crm-panel-bg);
   border-radius: 20px;
-  border: 1px solid #222;
+  border: 1px solid var(--crm-border);
   padding: 2rem;
   height: fit-content;
+  transition: all 0.5s ease;
 }
 
 .profile-header {
@@ -486,6 +496,8 @@ onMounted(() => {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
+  color: var(--crm-text);
+  transition: color 0.5s ease;
 }
 
 .status-badge {
@@ -536,15 +548,17 @@ onMounted(() => {
 .info-group label {
   display: block;
   font-size: 0.7rem;
-  color: #555;
+  color: var(--crm-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0.4rem;
+  transition: color 0.5s ease;
 }
 
 .info-group .value {
   font-size: 0.95rem;
-  color: #ddd;
+  color: var(--crm-text);
+  transition: color 0.5s ease;
 }
 
 .price {
@@ -554,22 +568,25 @@ onMounted(() => {
 }
 
 .description {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--crm-nav-hover);
   padding: 0.8rem;
   border-radius: 8px;
   font-size: 0.85rem !important;
   line-height: 1.5;
+  color: var(--crm-text);
+  transition: all 0.5s ease;
 }
 
 .edit-input, .edit-textarea {
   width: 100%;
-  background: #000;
-  border: 1px solid #333;
-  color: #fff;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-input-border);
+  color: var(--crm-input-text);
   padding: 0.6rem;
   border-radius: 8px;
   font-family: inherit;
   font-size: 0.9rem;
+  transition: background 0.5s ease, border-color 0.3s, color 0.5s ease;
 }
 
 .edit-textarea { height: 100px; resize: none; }
@@ -597,13 +614,14 @@ onMounted(() => {
 
 /* Pipeline Tracker */
 .pipeline-card {
-  background: #111114;
+  background: var(--crm-panel-bg);
   border-radius: 20px;
-  border: 1px solid #222;
+  border: 1px solid var(--crm-border);
   padding: 1.5rem;
+  transition: all 0.5s ease;
 }
 
-.pipeline-card h3 { font-size: 1rem; margin-bottom: 1.5rem; color: #888; }
+.pipeline-card h3 { font-size: 1rem; margin-bottom: 1.5rem; color: var(--crm-text-muted); transition: color 0.5s ease; }
 
 .pipeline-steps {
   display: flex;
@@ -618,8 +636,9 @@ onMounted(() => {
   left: 0;
   right: 0;
   height: 2px;
-  background: #222;
+  background: var(--crm-border);
   z-index: 0;
+  transition: background 0.5s ease;
 }
 
 .step {
@@ -635,32 +654,33 @@ onMounted(() => {
 .step-dot {
   width: 20px;
   height: 20px;
-  background: #0a0a0c;
-  border: 3px solid #333;
+  background: var(--crm-bg);
+  border: 3px solid var(--crm-border);
   border-radius: 50%;
-  transition: 0.3s;
+  transition: all 0.5s ease;
 }
 
 .step-label {
   font-size: 0.75rem;
-  color: #555;
+  color: var(--crm-text-muted);
   font-weight: 600;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .step.active .step-dot { border-color: #ff3e00; background: #ff3e00; box-shadow: 0 0 15px #ff3e0060; }
-.step.active .step-label { color: #fff; }
+.step.active .step-label { color: var(--crm-text); }
 
 .step.completed .step-dot { border-color: #00ff88; background: #00ff88; }
 .step.completed .step-label { color: #00ff88; }
 
 /* Timeline Card */
 .timeline-card {
-  background: #111114;
+  background: var(--crm-panel-bg);
   border-radius: 20px;
-  border: 1px solid #222;
+  border: 1px solid var(--crm-border);
   padding: 2rem;
   flex: 1;
+  transition: all 0.5s ease;
 }
 
 .timeline-header {
@@ -673,40 +693,42 @@ onMounted(() => {
 .timeline-header h3 { font-size: 1.1rem; }
 
 .activity-selector select {
-  background: #1a1a1e;
-  border: 1px solid #333;
-  color: #fff;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-input-border);
+  color: var(--crm-input-text);
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
   font-size: 0.8rem;
+  transition: all 0.5s ease;
 }
 
 .note-input textarea {
   width: 100%;
   height: 80px;
-  background: #0a0a0c;
-  border: 1px solid #333;
+  background: var(--crm-input-bg);
+  border: 1px solid var(--crm-input-border);
   border-radius: 12px;
-  color: #fff;
+  color: var(--crm-input-text);
   padding: 1rem;
   margin-bottom: 1rem;
   resize: none;
   font-family: inherit;
+  transition: background 0.5s ease, border-color 0.3s, color 0.5s ease;
 }
 
 .save-btn {
   width: 100%;
   padding: 0.8rem;
-  background: #fff;
-  color: #000;
+  background: var(--crm-text);
+  color: var(--crm-bg);
   border: none;
   border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
-.save-btn:hover { background: #ddd; }
+.save-btn:hover { background: var(--crm-border); color: var(--crm-text); }
 .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .timeline-feed {
@@ -724,13 +746,14 @@ onMounted(() => {
 .timeline-icon {
   width: 32px;
   height: 32px;
-  background: #1a1a1e;
+  background: var(--crm-nav-hover);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ff3e00;
   flex-shrink: 0;
+  transition: background 0.5s ease;
 }
 
 .timeline-meta {
@@ -739,19 +762,21 @@ onMounted(() => {
   margin-bottom: 0.3rem;
 }
 
-.timeline-meta .type { font-size: 0.8rem; font-weight: 700; color: #555; text-transform: uppercase; }
-.timeline-meta .date { font-size: 0.75rem; color: #444; }
+.timeline-meta .type { font-size: 0.8rem; font-weight: 700; color: var(--crm-text-muted); text-transform: uppercase; }
+.timeline-meta .date { font-size: 0.75rem; color: var(--crm-text-muted); }
 
 .timeline-content p {
-  color: #aaa;
+  color: var(--crm-text);
   font-size: 0.9rem;
   line-height: 1.5;
   margin: 0;
+  transition: color 0.5s ease;
 }
 
 .empty-state {
   text-align: center;
   padding: 3rem;
-  color: #333;
+  color: var(--crm-text-muted);
+  transition: color 0.5s ease;
 }
 </style>
