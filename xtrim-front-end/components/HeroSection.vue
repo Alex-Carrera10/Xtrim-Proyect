@@ -1,5 +1,10 @@
 <script setup>
-// No extra logic needed for the hero section
+const scrollToCollections = () => {
+  const element = document.getElementById('collections')
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+}
 </script>
 
 <template>
@@ -17,7 +22,7 @@
           Every joint, every grain, and every finish is executed with master precision.
         </p>
         <div class="cta">
-          <button class="button-premium">View Collections</button>
+          <button @click="scrollToCollections" class="button-premium">View Collections</button>
           <button class="secondary-btn">Commission a Piece</button>
         </div>
       </div>

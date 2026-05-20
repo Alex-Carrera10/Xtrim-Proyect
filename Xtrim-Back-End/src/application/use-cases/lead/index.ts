@@ -5,5 +5,6 @@ export * from "./GetLeadByIdUseCase";
 export * from "./GetLeadHistoryUseCase";
 export * from "./GetLeadsUseCase";
 export * from "./GetSalesKPIUseCase";
+export * from "./GetNewLeadsCountUseCase";
 export * from "./UpdateLeadStatusUseCase";
 export * from "./UpdateLeadUseCase";

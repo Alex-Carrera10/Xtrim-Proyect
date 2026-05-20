@@ -56,7 +56,7 @@ onMounted(() => {
   <div class="home-page">
     <HeroSection />
     
-    <section class="catalog-section">
+    <section class="catalog-section" id="collections">
       <div class="container">
         <div class="header">
           <span class="overline">Curation</span>

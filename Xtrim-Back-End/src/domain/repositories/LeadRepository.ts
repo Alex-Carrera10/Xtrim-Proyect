@@ -8,6 +8,7 @@ export interface LeadRepository {
   update(id: string, lead: Partial<Lead>): Promise<Lead | null>;
   delete(id: string): Promise<boolean>;
   getSalesGrowth(): Promise<number>;
+  getNewLeadsCount(): Promise<number>;
   
   // CRM Methods
   addActivity(activity: Activity): Promise<Activity>;

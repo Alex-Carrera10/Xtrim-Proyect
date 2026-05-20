@@ -4,7 +4,8 @@ import {
   CreateLeadUseCase,
   GetLeadsUseCase,
   UpdateLeadUseCase,
-  GetSalesKPIUseCase
+  GetSalesKPIUseCase,
+  GetNewLeadsCountUseCase
 } from "@application/use-cases/lead";
 
 // Setup
@@ -13,6 +14,7 @@ const createLeadUseCase = new CreateLeadUseCase(repo);
 const getLeadsUseCase = new GetLeadsUseCase(repo);
 const updateLeadUseCase = new UpdateLeadUseCase(repo);
 const getSalesKPIUseCase = new GetSalesKPIUseCase(repo);
+const getNewLeadsCountUseCase = new GetNewLeadsCountUseCase(repo);
 
 const createResponse = (statusCode: number, body: any): APIGatewayProxyResult => ({
   statusCode,
@@ -56,8 +58,12 @@ export const updateLead = async (event: APIGatewayProxyEvent): Promise<APIGatewa
 
 export const getSalesKPI = async (): Promise<APIGatewayProxyResult> => {
   try {
-    const kpi = await getSalesKPIUseCase.execute();
-    return createResponse(200, kpi);
+    const salesKpi = await getSalesKPIUseCase.execute();
+    const newLeadsCount = await getNewLeadsCountUseCase.execute();
+    return createResponse(200, {
+      totalSales: salesKpi.totalSales,
+      newLeadsCount
+    });
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }

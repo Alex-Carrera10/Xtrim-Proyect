@@ -130,6 +130,11 @@
           <div class="stat-change positive">+5 hoy</div>
         </div>
         <div class="stat-card">
+          <div class="stat-label">Leads Nuevos</div>
+          <div class="stat-value">{{ stats.newLeads }}</div>
+          <div class="stat-change positive">Por gestionar</div>
+        </div>
+        <div class="stat-card">
           <div class="stat-label">Tasa de Cierre</div>
           <div class="stat-value">{{ conversionRate }}%</div>
           <div class="stat-change">Meta: 20%</div>
@@ -230,6 +235,7 @@ const config = useRuntimeConfig();
 const leads = ref([]);
 const stats = reactive({
   revenue: 0,
+  newLeads: 0,
 });
 
 const showDeleteModal = ref(false)
@@ -262,6 +268,7 @@ const fetchLeads = async () => {
     // Fetch KPI
     const kpiResponse = await $fetch(`${config.public.apiUrl}/leads/kpi`);
     stats.revenue = kpiResponse.totalSales || 0;
+    stats.newLeads = kpiResponse.newLeadsCount || 0;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -474,7 +481,7 @@ onMounted(() => {
 /* Stats */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   margin-bottom: 3rem;
 }

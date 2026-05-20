@@ -74,6 +74,14 @@ export class PrismaLeadRepository implements LeadRepository {
     return result._sum.valor_estimado || 0;
   }
 
+  async getNewLeadsCount(): Promise<number> {
+    return await prisma.lead.count({
+      where: {
+        status: "NUEVO",
+      },
+    });
+  }
+
   async addActivity(activity: Activity): Promise<Activity> {
     const created = await prisma.activity.create({
       data: {
