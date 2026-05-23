@@ -1,27 +1,6 @@
 <template>
   <div class="lead-management-page">
-    <aside class="sidebar">
-      <div class="logo">
-        <span class="xtrim">DORADO</span><span class="crm">CRM</span>
-      </div>
-      <nav>
-        <NuxtLink to="/admin" class="nav-item">
-          <LayoutDashboard :size="18" /> Dashboard
-        </NuxtLink>
-        <NuxtLink to="/" class="nav-item">
-          <Globe :size="18" /> Ver Sitio
-        </NuxtLink>
-        <div class="nav-divider"></div>
-        <button @click="isDark = !isDark" class="nav-item theme-toggle-btn" type="button" :title="isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
-          <Sun v-if="isDark" :size="18" />
-          <Moon v-else :size="18" />
-          {{ isDark ? 'Modo Claro' : 'Modo Oscuro' }}
-        </button>
-        <button @click="handleLogout" class="nav-item logout-btn">
-          <LogOut :size="18" /> Cerrar Sesión
-        </button>
-      </nav>
-    </aside>
+    <AdminSidebar />
 
     <main class="content" v-if="lead">
       <header class="top-bar">
@@ -168,9 +147,8 @@
 <script setup>
 import { inject } from 'vue'
 import { 
-  LayoutDashboard, Globe, LogOut, ChevronRight, MessageCircle, 
-  Phone, MessageSquare, Calendar, PhoneCall, Mail, User, Edit2, Trash2, X,
-  Sun, Moon
+  ChevronRight, MessageCircle, 
+  Phone, MessageSquare, Calendar, PhoneCall, Mail, Edit2, Trash2, X
 } from 'lucide-vue-next'
 
 definePageMeta({
@@ -321,11 +299,7 @@ const formatDateTime = (dateStr) => {
   })
 }
 
-const handleLogout = () => {
-  const auth = useCookie('auth_token')
-  auth.value = null
-  navigateTo('/login')
-}
+
 
 onMounted(() => {
   fetchLeadData()
@@ -347,46 +321,7 @@ onMounted(() => {
   transition: background 0.5s ease, color 0.5s ease;
 }
 
-/* Sidebar Re-styling */
-.sidebar {
-  width: 260px;
-  background: var(--crm-sidebar-bg);
-  border-right: 1px solid var(--crm-border);
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  transition: background 0.5s ease, border-color 0.5s ease;
-}
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin-bottom: 3rem;
-}
-
-.xtrim { color: var(--crm-text); transition: color 0.5s ease; }
-.crm { color: #ff3e00; }
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem 1rem;
-  color: var(--crm-text-muted);
-  text-decoration: none;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
-  background: transparent;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-}
-
-.nav-item:hover { background: var(--crm-nav-hover); color: var(--crm-text); }
-.nav-divider { flex-grow: 1; }
-.logout-btn { color: #ff4d4d; }
-.logout-btn:hover { background: rgba(255, 0, 0, 0.1); color: #ff4d4d; }
 
 /* Main Content */
 .content {

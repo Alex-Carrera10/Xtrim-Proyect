@@ -182,6 +182,39 @@ const serverlessConfiguration: AWS = {
         },
       ],
     },
+    getNotifications: {
+      handler: "src/infrastructure/handlers/notification.getNotifications",
+      events: [
+        {
+          httpApi: {
+            method: "GET",
+            path: "/notifications",
+          },
+        },
+      ],
+    },
+    markNotificationAsRead: {
+      handler: "src/infrastructure/handlers/notification.markAsRead",
+      events: [
+        {
+          httpApi: {
+            method: "PATCH",
+            path: "/notifications/{id}/read",
+          },
+        },
+      ],
+    },
+    markAllNotificationsAsRead: {
+      handler: "src/infrastructure/handlers/notification.markAllAsRead",
+      events: [
+        {
+          httpApi: {
+            method: "PATCH",
+            path: "/notifications/read-all",
+          },
+        },
+      ],
+    },
   },
   package: { individually: true },
 };

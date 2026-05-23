@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { PrismaLeadRepository } from "../persistence/PrismaLeadRepository";
+import { PrismaNotificationRepository } from "../persistence/PrismaNotificationRepository";
 import {
   UpdateLeadStatusUseCase,
   AddLeadActivityUseCase,
@@ -8,10 +9,13 @@ import {
   DeleteLeadUseCase,
   UpdateLeadUseCase
 } from "@application/use-cases/lead";
+import { CreateNotificationUseCase } from "@application/use-cases/notification/CreateNotificationUseCase";
 
 // Setup
 const repo = new PrismaLeadRepository();
-const updateStatusUseCase = new UpdateLeadStatusUseCase(repo);
+const notificationRepo = new PrismaNotificationRepository();
+const createNotificationUseCase = new CreateNotificationUseCase(notificationRepo);
+const updateStatusUseCase = new UpdateLeadStatusUseCase(repo, createNotificationUseCase);
 const addActivityUseCase = new AddLeadActivityUseCase(repo);
 const getHistoryUseCase = new GetLeadHistoryUseCase(repo);
 const getLeadByIdUseCase = new GetLeadByIdUseCase(repo);
