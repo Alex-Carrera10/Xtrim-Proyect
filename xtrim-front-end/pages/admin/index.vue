@@ -196,6 +196,7 @@ definePageMeta({
 const isDark = inject('isDark')
 
 const config = useRuntimeConfig();
+const { getAuthHeaders } = useAuth();
 
 const leads = ref([]);
 const stats = reactive({
@@ -227,11 +228,14 @@ const conversionRate = computed(() => {
 
 const fetchLeads = async () => {
   try {
-    const response = await $fetch(`${config.public.apiUrl}/leads`);
+    const response = await $fetch(`${config.public.apiUrl}/leads`, {
+      headers: getAuthHeaders(),
+    });
     leads.value = response;
-    
-    // Fetch KPI
-    const kpiResponse = await $fetch(`${config.public.apiUrl}/leads/kpi`);
+
+    const kpiResponse = await $fetch(`${config.public.apiUrl}/leads/kpi`, {
+      headers: getAuthHeaders(),
+    });
     stats.revenue = kpiResponse.totalSales || 0;
     stats.newLeads = kpiResponse.newLeadsCount || 0;
   } catch (error) {
@@ -250,7 +254,8 @@ const confirmDelete = async () => {
   isDeleting.value = true
   try {
     await $fetch(`${config.public.apiUrl}/leads/${leadToDelete.value}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getAuthHeaders(),
     })
     leads.value = leads.value.filter(l => l.id !== leadToDelete.value)
     showDeleteModal.value = false
@@ -267,7 +272,8 @@ const handleCreateLead = async () => {
   try {
     const response = await $fetch(`${config.public.apiUrl}/leads`, {
       method: 'POST',
-      body: newLead
+      headers: getAuthHeaders(),
+      body: newLead,
     })
     
     // Add to list and close

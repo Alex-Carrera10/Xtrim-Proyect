@@ -161,6 +161,7 @@ const isDark = inject('isDark')
 const route = useRoute()
 const leadId = route.params.id
 const config = useRuntimeConfig()
+const { getAuthHeaders } = useAuth()
 
 const lead = ref(null)
 const activities = ref([])
@@ -184,8 +185,8 @@ const pipelineSteps = ['Nuevo', 'Contactado', 'En gestión', 'Ganado', 'Perdido'
 const fetchLeadData = async () => {
   try {
     const [leadData, historyData] = await Promise.all([
-      $fetch(`${config.public.apiUrl}/leads/${leadId}`),
-      $fetch(`${config.public.apiUrl}/leads/${leadId}/activities`)
+      $fetch(`${config.public.apiUrl}/leads/${leadId}`, { headers: getAuthHeaders() }),
+      $fetch(`${config.public.apiUrl}/leads/${leadId}/activities`, { headers: getAuthHeaders() })
     ])
     lead.value = leadData
     activities.value = historyData
@@ -209,6 +210,7 @@ const saveChanges = async () => {
   try {
     const updatedLead = await $fetch(`${config.public.apiUrl}/leads/${leadId}`, {
       method: 'PUT',
+      headers: getAuthHeaders(),
       body: editForm
     })
     lead.value = updatedLead
@@ -227,7 +229,8 @@ const handleDelete = async () => {
   
   try {
     await $fetch(`${config.public.apiUrl}/leads/${leadId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getAuthHeaders(),
     })
     navigateTo('/admin')
   } catch (error) {
@@ -242,6 +245,7 @@ const updateStatus = async (newStatus) => {
   try {
     await $fetch(`${config.public.apiUrl}/leads/${leadId}/status`, {
       method: 'PATCH',
+      headers: getAuthHeaders(),
       body: { status: newStatus }
     })
     
@@ -264,6 +268,7 @@ const saveActivity = async (contentInput = null, typeInput = null) => {
   try {
     await $fetch(`${config.public.apiUrl}/leads/${leadId}/activities`, {
       method: 'POST',
+      headers: getAuthHeaders(),
       body: { content, type }
     })
     newNote.value = ''
