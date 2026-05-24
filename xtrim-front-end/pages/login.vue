@@ -64,23 +64,20 @@ watch(isDark, (newVal) => {
   themeCookie.value = newVal ? 'dark' : 'light'
 })
 
+const { login } = useAuth()
+
 const handleLogin = async () => {
   isLoading.value = true
   error.value = null
 
-  // MOCK LOGIN: En un caso real, esto llamaría a tu API de Backend
-  // Por ahora usaremos admin / admin123 como ejemplo
-  setTimeout(() => {
-    if (credentials.username === 'admin' && credentials.password === 'admin123') {
-      const auth = useCookie('auth_token')
-      auth.value = 'dummy-token-123' // En un caso real, esto vendría del JWT del backend
-      
-      navigateTo('/admin')
-    } else {
-      error.value = 'Credenciales incorrectas. Intenta con admin / admin123'
-    }
+  try {
+    await login(credentials.username, credentials.password)
+    navigateTo('/admin')
+  } catch {
+    error.value = 'Credenciales incorrectas'
+  } finally {
     isLoading.value = false
-  }, 1000)
+  }
 }
 </script>
 

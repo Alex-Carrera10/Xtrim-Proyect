@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { authGuard } from "../middleware/authGuard";
 import { PrismaProductRepository } from "../persistence/PrismaProductRepository";
 import {
   CreateProductUseCase,
@@ -22,7 +23,7 @@ const createResponse = (statusCode: number, body: any): APIGatewayProxyResult =>
   body: JSON.stringify(body),
 });
 
-export const createProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const createProduct = authGuard(async (event) => {
   try {
     const body = JSON.parse(event.body || "{}");
     const product = await createProductUseCase.execute(body);
@@ -30,7 +31,7 @@ export const createProduct = async (event: APIGatewayProxyEvent): Promise<APIGat
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
 export const getProducts = async (): Promise<APIGatewayProxyResult> => {
   try {
@@ -54,30 +55,30 @@ export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGa
   }
 };
 
-export const updateProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const updateProduct = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
-    
+
     const body = JSON.parse(event.body || "{}");
     const updatedProduct = await updateProductUseCase.execute(id, body);
-    
+
     if (!updatedProduct) return createResponse(404, { message: "Product not found" });
     return createResponse(200, updatedProduct);
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const deleteProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const deleteProduct = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
-    
+
     const success = await deleteProductUseCase.execute(id);
     if (!success) return createResponse(404, { message: "Product not found" });
     return createResponse(200, { message: "Product deleted successfully" });
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});

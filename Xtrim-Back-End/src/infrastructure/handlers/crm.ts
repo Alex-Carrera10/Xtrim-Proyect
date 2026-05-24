@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyResult } from "aws-lambda";
 import { PrismaLeadRepository } from "../persistence/PrismaLeadRepository";
 import { PrismaNotificationRepository } from "../persistence/PrismaNotificationRepository";
 import {
@@ -10,6 +10,7 @@ import {
   UpdateLeadUseCase
 } from "@application/use-cases/lead";
 import { CreateNotificationUseCase } from "@application/use-cases/notification/CreateNotificationUseCase";
+import { authGuard } from "../middleware/authGuard";
 
 // Setup
 const repo = new PrismaLeadRepository();
@@ -32,11 +33,11 @@ const createResponse = (statusCode: number, body: any): APIGatewayProxyResult =>
   body: JSON.stringify(body),
 });
 
-export const updateLeadStatus = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const updateLeadStatus = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
-    
+
     const { status } = JSON.parse(event.body || "{}");
     if (!status) return createResponse(400, { message: "Status is required" });
 
@@ -45,9 +46,9 @@ export const updateLeadStatus = async (event: APIGatewayProxyEvent): Promise<API
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const addActivity = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const addActivity = authGuard(async (event) => {
   try {
     const leadId = event.pathParameters?.id;
     if (!leadId) return createResponse(400, { message: "Lead ID is required" });
@@ -60,9 +61,9 @@ export const addActivity = async (event: APIGatewayProxyEvent): Promise<APIGatew
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const getLeadHistory = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getLeadHistory = authGuard(async (event) => {
   try {
     const leadId = event.pathParameters?.id;
     if (!leadId) return createResponse(400, { message: "Lead ID is required" });
@@ -72,9 +73,9 @@ export const getLeadHistory = async (event: APIGatewayProxyEvent): Promise<APIGa
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const getLeadById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getLeadById = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
@@ -86,9 +87,9 @@ export const getLeadById = async (event: APIGatewayProxyEvent): Promise<APIGatew
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const deleteLead = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const deleteLead = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
@@ -98,18 +99,18 @@ export const deleteLead = async (event: APIGatewayProxyEvent): Promise<APIGatewa
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const updateLead = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const updateLead = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
 
     const body = JSON.parse(event.body || "{}");
     const updatedLead = await updateLeadUseCase.execute(id, body);
-    
+
     return createResponse(200, updatedLead);
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});

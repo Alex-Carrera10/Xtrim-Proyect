@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 
 export interface DBProduct {
   id?: string
@@ -14,6 +13,7 @@ export interface DBProduct {
 export const useProducts = () => {
   const config = useRuntimeConfig()
   const apiBase = config.public.apiUrl
+  const { getAuthHeaders } = useAuth()
   const products = useState<DBProduct[]>('products', () => [])
   const loading = useState<boolean>('products_loading', () => false)
   const error = useState<string | null>('products_error', () => null)
@@ -37,6 +37,7 @@ export const useProducts = () => {
     try {
       const newProduct = await $fetch<DBProduct>(`${apiBase}/products`, {
         method: 'POST',
+        headers: getAuthHeaders(),
         body: productData,
       })
       products.value.unshift(newProduct)
@@ -54,6 +55,7 @@ export const useProducts = () => {
     try {
       const updated = await $fetch<DBProduct>(`${apiBase}/products/${id}`, {
         method: 'PUT',
+        headers: getAuthHeaders(),
         body: productData,
       })
       const index = products.value.findIndex(p => p.id === id)
@@ -74,6 +76,7 @@ export const useProducts = () => {
     try {
       await $fetch(`${apiBase}/products/${id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       })
       products.value = products.value.filter(p => p.id !== id)
       return true

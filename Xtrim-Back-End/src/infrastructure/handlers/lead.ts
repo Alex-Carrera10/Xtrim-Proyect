@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyResult } from "aws-lambda";
 import { PrismaLeadRepository } from "../persistence/PrismaLeadRepository";
 import {
   CreateLeadUseCase,
@@ -7,6 +7,7 @@ import {
   GetSalesKPIUseCase,
   GetNewLeadsCountUseCase
 } from "@application/use-cases/lead";
+import { authGuard } from "../middleware/authGuard";
 
 // Setup
 const repo = new PrismaLeadRepository();
@@ -22,7 +23,7 @@ const createResponse = (statusCode: number, body: any): APIGatewayProxyResult =>
   body: JSON.stringify(body),
 });
 
-export const createLead = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const createLead = authGuard(async (event) => {
   try {
     const body = JSON.parse(event.body || "{}");
     const lead = await createLeadUseCase.execute(body);
@@ -30,33 +31,33 @@ export const createLead = async (event: APIGatewayProxyEvent): Promise<APIGatewa
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const getLeads = async (): Promise<APIGatewayProxyResult> => {
+export const getLeads = authGuard(async () => {
   try {
     const leads = await getLeadsUseCase.execute();
     return createResponse(200, leads);
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const updateLead = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const updateLead = authGuard(async (event) => {
   try {
     const id = event.pathParameters?.id;
     if (!id) return createResponse(400, { message: "ID is required" });
-    
+
     const body = JSON.parse(event.body || "{}");
     const updatedLead = await updateLeadUseCase.execute(id, body);
-    
+
     if (!updatedLead) return createResponse(404, { message: "Lead not found" });
     return createResponse(200, updatedLead);
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});
 
-export const getSalesKPI = async (): Promise<APIGatewayProxyResult> => {
+export const getSalesKPI = authGuard(async () => {
   try {
     const salesKpi = await getSalesKPIUseCase.execute();
     const newLeadsCount = await getNewLeadsCountUseCase.execute();
@@ -67,4 +68,4 @@ export const getSalesKPI = async (): Promise<APIGatewayProxyResult> => {
   } catch (error: any) {
     return createResponse(500, { message: error.message });
   }
-};
+});

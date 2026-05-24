@@ -25,9 +25,23 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       DATABASE_URL: "${env:DATABASE_URL}",
+      JWT_SECRET: "${env:JWT_SECRET}",
+      ADMIN_USERNAME: "${env:ADMIN_USERNAME}",
+      ADMIN_PASSWORD: "${env:ADMIN_PASSWORD}",
     },
   },
   functions: {
+    login: {
+      handler: "src/infrastructure/handlers/auth.login",
+      events: [
+        {
+          httpApi: {
+            method: "POST",
+            path: "/auth/login",
+          },
+        },
+      ],
+    },
     createLead: {
       handler: "src/infrastructure/handlers/lead.createLead",
       events: [
