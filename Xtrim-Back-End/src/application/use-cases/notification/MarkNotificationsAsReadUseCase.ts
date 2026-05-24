@@ -1,4 +1,4 @@
-import { NotificationRepository } from "../../domain/repositories/NotificationRepository";
+import { NotificationRepository } from "../../../domain/repositories/NotificationRepository";
 
 export class MarkNotificationsAsReadUseCase {
   constructor(private notificationRepository: NotificationRepository) {}
