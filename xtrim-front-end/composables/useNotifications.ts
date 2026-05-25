@@ -15,6 +15,7 @@ export const useNotifications = () => {
   const notifications = useState<Notification[]>('notifications', () => []);
   const unreadCount = computed(() => notifications.value.length);
   const loading = ref(false);
+  const isFirstFetch = ref(true);
 
   const fetchNotifications = async () => {
     loading.value = true;
@@ -23,13 +24,15 @@ export const useNotifications = () => {
         headers: getAuthHeaders(),
       });
 
-      const currentIds = new Set(notifications.value.map(n => n.id));
-      const newNotifications = data.filter(n => !currentIds.has(n.id));
+      if (!isFirstFetch.value) {
+        const currentIds = new Set(notifications.value.map(n => n.id));
+        const newNotifications = data.filter(n => !currentIds.has(n.id));
+        newNotifications.forEach(n => {
+          addToast(n.title, n.message, n.type.toLowerCase());
+        });
+      }
 
-      newNotifications.forEach(n => {
-        addToast(n.title, n.message, n.type.toLowerCase());
-      });
-
+      isFirstFetch.value = false;
       notifications.value = data;
     } catch (error) {
       console.error('Error fetching notifications:', error);
