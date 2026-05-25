@@ -12,6 +12,10 @@
         <ShoppingBag :size="18" />
         Catalog Products
       </NuxtLink>
+      <NuxtLink to="/admin/materials" class="nav-item" :class="{ active: isActive('/admin/materials') }">
+        <Layers :size="18" />
+        Materials
+      </NuxtLink>
       <NuxtLink to="/" class="nav-item">
         <ExternalLink :size="18" />
         View Site
@@ -37,13 +41,14 @@
 <script setup>
 import { inject } from 'vue'
 import { useRoute } from 'vue-router'
-import { 
-  LayoutDashboard, 
-  ShoppingBag, 
-  ExternalLink, 
-  Sun, 
-  Moon, 
-  LogOut 
+import {
+  LayoutDashboard,
+  ShoppingBag,
+  Layers,
+  ExternalLink,
+  Sun,
+  Moon,
+  LogOut
 } from 'lucide-vue-next'
 
 const isDark = inject('isDark')

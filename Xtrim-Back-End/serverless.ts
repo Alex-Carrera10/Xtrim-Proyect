@@ -196,6 +196,26 @@ const serverlessConfiguration: AWS = {
         },
       ],
     },
+    createMaterial: {
+      handler: "src/infrastructure/handlers/material.createMaterial",
+      events: [{ httpApi: { method: "POST", path: "/materials" } }],
+    },
+    getMaterials: {
+      handler: "src/infrastructure/handlers/material.getMaterials",
+      events: [{ httpApi: { method: "GET", path: "/materials" } }],
+    },
+    getMaterialById: {
+      handler: "src/infrastructure/handlers/material.getMaterialById",
+      events: [{ httpApi: { method: "GET", path: "/materials/{id}" } }],
+    },
+    updateMaterial: {
+      handler: "src/infrastructure/handlers/material.updateMaterial",
+      events: [{ httpApi: { method: "PUT", path: "/materials/{id}" } }],
+    },
+    deleteMaterial: {
+      handler: "src/infrastructure/handlers/material.deleteMaterial",
+      events: [{ httpApi: { method: "DELETE", path: "/materials/{id}" } }],
+    },
     getNotifications: {
       handler: "src/infrastructure/handlers/notification.getNotifications",
       events: [

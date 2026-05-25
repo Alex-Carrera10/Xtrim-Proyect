@@ -14,7 +14,7 @@ if (process.client) {
 const navLinks = [
   { name: 'Furniture', href: '/' },
   { name: 'Custom Pieces', href: '#' },
-  { name: 'Materials', href: '#' },
+  { name: 'Materials', href: '/materiales' },
   { name: 'Workshops', href: '#' },
   { name: 'About', href: '#' }
 ]
