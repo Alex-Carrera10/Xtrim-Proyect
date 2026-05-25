@@ -68,90 +68,91 @@ onMounted(() => {
 
 <style scoped>
 .materials-page {
-  background: #0a0a0a;
+  background: var(--background);
   min-height: 100vh;
-  color: #f5f0ea;
+  color: var(--foreground);
 }
 
 /* Hero */
 .hero {
-  min-height: 50vh;
+  min-height: 44vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 8rem 2rem 4rem;
-  background: radial-gradient(ellipse at center top, rgba(255, 62, 0, 0.08) 0%, transparent 60%);
+  border-bottom: 1px solid var(--border);
 }
 
 .hero-label {
-  font-size: 0.75rem;
+  display: inline-block;
+  font-size: 0.72rem;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #ff3e00;
+  color: var(--accent);
   margin-bottom: 1.5rem;
   font-weight: 600;
+  border: 1px solid var(--border);
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   margin-bottom: 1.5rem;
-  color: #f5f0ea;
+  color: var(--primary);
 }
 
-.accent { color: #ff3e00; }
+.accent { color: var(--secondary); }
 
 .hero-sub {
-  font-size: 1.1rem;
-  color: #8a8a8a;
-  max-width: 560px;
+  font-size: 1rem;
+  color: #6b6b6b;
+  max-width: 520px;
   margin: 0 auto;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 /* Catalog */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
 .catalog-section {
   padding: 4rem 2rem 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Filtros */
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.6rem;
   margin-bottom: 3rem;
 }
 
 .filter-btn {
   background: transparent;
-  border: 1px solid rgba(255, 240, 220, 0.15);
-  color: #8a8a8a;
-  padding: 0.5rem 1.2rem;
-  border-radius: 30px;
-  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  color: #6b6b6b;
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .filter-btn:hover {
-  border-color: #ff3e00;
-  color: #ff3e00;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .filter-btn.active {
-  background: #ff3e00;
-  border-color: #ff3e00;
-  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--background);
   font-weight: 600;
 }
 
@@ -159,21 +160,20 @@ onMounted(() => {
 .materials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1.75rem;
 }
 
 .material-card {
-  background: #111;
-  border: 1px solid rgba(255, 240, 220, 0.08);
-  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
   overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .material-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 62, 0, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--primary-glow);
 }
 
 .card-image {
@@ -190,22 +190,22 @@ onMounted(() => {
 }
 
 .material-card:hover .card-image img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .type-badge {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 62, 0, 0.4);
-  color: #ff3e00;
+  border: 1px solid var(--glass-border);
+  color: var(--primary);
   padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.72rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -214,23 +214,23 @@ onMounted(() => {
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #f5f0ea;
-  margin-bottom: 0.75rem;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
 }
 
 .card-desc {
-  font-size: 0.9rem;
-  color: #8a8a8a;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  color: #6b6b6b;
+  line-height: 1.65;
 }
 
 .loading-state,
 .empty-state {
   text-align: center;
   padding: 5rem 2rem;
-  color: #8a8a8a;
+  color: #6b6b6b;
   font-size: 1rem;
 }
 </style>
