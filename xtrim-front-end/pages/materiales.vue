@@ -1,7 +1,5 @@
 <template>
   <div class="materials-page">
-    <TheNavbar />
-
     <section class="hero">
       <div class="hero-content">
         <p class="hero-label">Nuestra Materia Prima</p>
@@ -43,8 +41,6 @@
         </article>
       </div>
     </section>
-
-    <TheFooter />
   </div>
 </template>
 
